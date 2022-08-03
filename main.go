@@ -10,7 +10,6 @@ import (
 	"time"
 )
 
-var MIN_WORD_COUNT = 3
 var ALL_LINES []Line
 
 var CHARACTERS = map[string]string{
@@ -109,6 +108,7 @@ func printLines(lines []Line) {
 
 func getRandomLines(numLines int) ([]Line, error) {
 	var randomLines []Line
+
 	for i := 0; i < numLines; i++ {
 		randomLines = append(randomLines, ALL_LINES[rand.Intn(len(ALL_LINES))])
 	}
