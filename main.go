@@ -1,8 +1,7 @@
-package main
+package subspace
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"math/rand"
 	"os"
@@ -23,7 +22,7 @@ var CHARACTERS = map[string]string{
 	"troi":    "troi.json",
 	"wesley":  "wesley.json",
 	"worf":    "worf.json",
-	"tasha":     "yar.json",
+	"tasha":   "yar.json",
 }
 
 type Paragraph struct {
@@ -35,27 +34,8 @@ type Line struct {
 	WordCount int16  `json:"word_count"`
 }
 
-func main() {
-	var numParagraphs int
-	var numLines int
-	var shouldPrintCharacters bool
-	var character string
-	flag.IntVar(&numParagraphs, "paragraphs", 1, "the number of paragraphs to print")
-	flag.IntVar(&numParagraphs, "p", 1, "the number of paragraphs to print")
-	flag.IntVar(&numLines, "lines", 3, "the number of lines to print")
-	flag.IntVar(&numLines, "l", 3, "the number of lines to print")
-	flag.StringVar(&character, "c", "picard", "the character whose dialog you want")
-	flag.StringVar(&character, "character", "picard", "the character whose dialog you want")
-	flag.BoolVar(&shouldPrintCharacters, "lc", false, "list the available characters")
-	flag.BoolVar(&shouldPrintCharacters, "list-chars", false, "list the available characters")
-	flag.Parse()
-
-	if shouldPrintCharacters {
-		listAllCharacters()
-		return
-	}
-
-	err := getLines(character)
+func MakeItSo(numParagraphs int, numLines int, character string) string {
+	err := loadLines(character)
 	if err != nil {
 		panic(err)
 	}
@@ -72,20 +52,30 @@ func main() {
 		paragraphs = append(paragraphs, p)
 	}
 
+	var output []string
 	for _, p := range paragraphs {
-		printParagraph(p)
-		fmt.Println()
+		output = append(output, p.String())
 	}
+
+	return strings.Join(output, "\n")
 }
 
-func listAllCharacters() {
+func ListAllCharacters() {
 	for name := range CHARACTERS {
 		fmt.Println(strings.Title(name))
 	}
 }
 
-func printParagraph(p Paragraph) {
-	printLines(p.Lines)
+func (l *Line) String() string {
+	return l.Text
+}
+
+func (p Paragraph) String() string {
+	var lines []string
+	for _, l := range p.Lines {
+		lines = append(lines, l.String())
+	}
+	return strings.Join(lines, " ")
 }
 
 func getParagraph(numLines int) (Paragraph, error) {
@@ -98,14 +88,6 @@ func getParagraph(numLines int) (Paragraph, error) {
 	return p, nil
 }
 
-func printLines(lines []Line) {
-	var toPrint []string
-	for _, l := range lines {
-		toPrint = append(toPrint, l.Text)
-	}
-	fmt.Println(strings.Join(toPrint, " "))
-}
-
 func getRandomLines(numLines int) ([]Line, error) {
 	var randomLines []Line
 
@@ -115,8 +97,8 @@ func getRandomLines(numLines int) ([]Line, error) {
 	return randomLines, nil
 }
 
-func getLines(char string) error {
-	f, err := os.Open("./lines/"+char+".json")
+func loadLines(char string) error {
+	f, err := os.Open("./assets/" + char + ".json")
 	if err != nil {
 		return err
 	}
