@@ -1,12 +1,16 @@
 package subspace
 
 import (
+	"embed"
 	"encoding/json"
 	"math/rand"
-	"os"
 	"strings"
 	"time"
 )
+
+//go:embed assets/*.json
+var fs embed.FS
+
 
 var ALL_LINES []Line
 
@@ -99,14 +103,14 @@ func getRandomLines(numLines int) ([]Line, error) {
 }
 
 func loadLines(char string) error {
-	f, err := os.Open("./assets/" + char + ".json")
+	f, err := fs.ReadFile("assets/" + char + ".json")
 	if err != nil {
 		return err
 	}
 
-	d := json.NewDecoder(f)
+	// d := json.Unmarshal(f)
 
-	if err := d.Decode(&ALL_LINES); err != nil {
+	if err := json.Unmarshal(f, &ALL_LINES); err != nil {
 		return err
 	}
 
