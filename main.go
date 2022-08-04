@@ -2,7 +2,6 @@ package subspace
 
 import (
 	"encoding/json"
-	"fmt"
 	"math/rand"
 	"os"
 	"strings"
@@ -34,10 +33,10 @@ type Line struct {
 	WordCount int16  `json:"word_count"`
 }
 
-func MakeItSo(numParagraphs int, numLines int, character string) string {
+func MakeItSo(numParagraphs int, numLines int, character string) ([]string, error) {
 	err := loadLines(character)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	rand.Seed(time.Now().Unix())
@@ -46,7 +45,7 @@ func MakeItSo(numParagraphs int, numLines int, character string) string {
 	for i := 0; i < numParagraphs; i++ {
 		p, err := getParagraph(numLines)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 
 		paragraphs = append(paragraphs, p)
@@ -57,13 +56,15 @@ func MakeItSo(numParagraphs int, numLines int, character string) string {
 		output = append(output, p.String())
 	}
 
-	return strings.Join(output, "\n")
+	return output, nil
 }
 
-func ListAllCharacters() {
+func ListAllCharacters() []string {
+	var chars []string
 	for name := range CHARACTERS {
-		fmt.Println(strings.Title(name))
+		chars = append(chars, strings.Title(name))
 	}
+	return chars
 }
 
 func (l *Line) String() string {
