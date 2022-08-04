@@ -108,8 +108,6 @@ func loadLines(char string) error {
 		return err
 	}
 
-	// d := json.Unmarshal(f)
-
 	if err := json.Unmarshal(f, &ALL_LINES); err != nil {
 		return err
 	}
