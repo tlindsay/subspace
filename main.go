@@ -67,7 +67,7 @@ func ListAllCharacters() []string {
 	return chars
 }
 
-func (l *Line) String() string {
+func (l Line) String() string {
 	return l.Text
 }
 
