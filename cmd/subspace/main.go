@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/tlindsay/subspace"
-	"github.com/tlindsay/subspace/api"
 )
 
 func main() {
@@ -38,7 +37,7 @@ func main() {
 	}
 
 	if shouldStartServer {
-		api.StartServer(port)
+		subspace.StartServer(port)
 	}
 
 	text, err := subspace.MakeItSo(numParagraphs, numLines, character)

@@ -11,7 +11,6 @@ import (
 //go:embed assets/*.json
 var fs embed.FS
 
-
 var ALL_LINES []Line
 
 var CHARACTERS = map[string]string{
