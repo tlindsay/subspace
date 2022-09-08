@@ -15,8 +15,6 @@ var fs embed.FS
 //easyjson:json
 type LineSlice []Line
 
-var ALL_LINES LineSlice
-
 var CHARACTERS = map[string]string{
 	"beverly": "beverly.json",
 	"data":    "data.json",
@@ -41,7 +39,7 @@ type Line struct {
 }
 
 func MakeItSo(numParagraphs int, numLines int, character string) ([]string, error) {
-	err := loadLines(character)
+	lines, err := loadLines(character)
 	if err != nil {
 		return nil, err
 	}
@@ -50,11 +48,7 @@ func MakeItSo(numParagraphs int, numLines int, character string) ([]string, erro
 
 	var paragraphs []Paragraph
 	for i := 0; i < numParagraphs; i++ {
-		p, err := getParagraph(numLines)
-		if err != nil {
-			return nil, err
-		}
-
+		p := getParagraph(lines, numLines)
 		paragraphs = append(paragraphs, p)
 	}
 
@@ -86,34 +80,32 @@ func (p Paragraph) String() string {
 	return strings.Join(lines, " ")
 }
 
-func getParagraph(numLines int) (Paragraph, error) {
+func getParagraph(lines LineSlice, numLines int) Paragraph {
 	var p Paragraph
-	l, err := getRandomLines(numLines)
-	if err != nil {
-		return p, err
-	}
+	l := getRandomLines(lines, numLines)
 	p.Lines = l
-	return p, nil
+	return p
 }
 
-func getRandomLines(numLines int) ([]Line, error) {
+func getRandomLines(lines LineSlice, numLines int) []Line {
 	var randomLines []Line
 
 	for i := 0; i < numLines; i++ {
-		randomLines = append(randomLines, ALL_LINES[rand.Intn(len(ALL_LINES))])
+		randomLines = append(randomLines, lines[rand.Intn(len(lines))])
 	}
-	return randomLines, nil
+	return randomLines
 }
 
-func loadLines(char string) error {
+func loadLines(char string) (LineSlice, error) {
 	f, err := fs.ReadFile("assets/" + char + ".json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if err := easyjson.Unmarshal(f, &ALL_LINES); err != nil {
-		return err
+	var lines LineSlice
+	if err := easyjson.Unmarshal(f, &lines); err != nil {
+		return nil, err
 	}
 
-	return nil
+	return lines, nil
 }
