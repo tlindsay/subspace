@@ -2,8 +2,8 @@
 # https://developer.fastly.com/reference/fastly-toml/
 
 authors = ["fastly@thatdarnpat.com"]
-description = "A basic starter kit that demonstrates routing, simple synthetic responses and overriding caching rules."
+description = "A Lorem Ipsum generator for the 24th century."
 language = "go"
 manifest_version = 2
-name = "compute"
+name = "subspace"
 service_id = "6K0QrTEL5qNwI3Rrv3LBic"
