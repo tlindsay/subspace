@@ -9,6 +9,7 @@ import (
 	"github.com/fastly/compute-sdk-go/fsthttp"
 	easyjson "github.com/mailru/easyjson"
 	"github.com/tlindsay/subspace"
+	"github.com/tlindsay/subspace/compute/response"
 )
 
 // The entry point for your application.
@@ -18,15 +19,6 @@ import (
 // the request to a backend, make completely new requests, and/or generate
 // synthetic responses.
 
-type JsonMeta struct {
-	Paragraphs int `json:"numParagraphs"`
-	Lines      int `json:"linesPerParagraph"`
-}
-type JsonResponse struct {
-	Character string   `json:"character"`
-	Text      []string `json:"text"`
-	Meta      JsonMeta `json:"meta"`
-}
 
 func Error(w fsthttp.ResponseWriter, msg string, code int) {
 	w.WriteHeader(code)
@@ -90,7 +82,7 @@ func main() {
 
 		if r.Header.Get("Accept") == "application/json" {
 
-			j, err := easyjson.Marshal(JsonResponse{Character: char, Text: output, Meta: JsonMeta{Lines: numL, Paragraphs: numP}})
+			j, err := easyjson.Marshal(response.JsonResponse{Character: char, Text: output, Meta: response.JsonMeta{Lines: numL, Paragraphs: numP}})
 			if err != nil {
 				fmt.Printf("Unknown error occurred: %s\n", err)
 				Error(w, "Unknown error", 500)
