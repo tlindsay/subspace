@@ -5,11 +5,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
 	"github.com/tlindsay/subspace/response"
 )
+
+var DEFAULT_PARAGRAPHS = 3
+var DEFAULT_LINES = 5
 
 func StartServer(port int) {
 	fmt.Printf("Opening hailing frequencies on port %d...\n", port)
@@ -37,22 +41,38 @@ func Handler() http.HandlerFunc {
 
 		q := r.URL.Query()
 
-		numP, err := strconv.Atoi(q.Get("paragraphs"))
-		if err != nil {
-			http.Error(w, "Bad value for param \"paragraphs\"", 400)
-			logError.Printf("%s\n", err)
-			return
-		} else if numP < 1 {
-			numP = 1
+		var numP int
+		p := q.Get("paragraphs")
+		if p == "" {
+			numP = DEFAULT_PARAGRAPHS
+		} else {
+			var err error
+			numP, err = strconv.Atoi(p)
+
+			if err != nil {
+				http.Error(w, "Bad value for param \"paragraphs\"", 400)
+				logError.Printf("%s\n", err)
+				return
+			} else if numP < 1 {
+				numP = DEFAULT_PARAGRAPHS
+			}
 		}
 
-		numL, err := strconv.Atoi(q.Get("lines"))
-		if err != nil {
-			http.Error(w, "Bad value for param \"lines\"", 400)
-			logError.Printf("%s\n", err)
-			return
-		} else if numL < 1 {
-			numL = 1
+		var numL int
+		l := q.Get("lines")
+		if l == "" {
+			numL = DEFAULT_LINES
+		} else {
+			var err error
+			numL, err = strconv.Atoi(l)
+
+			if err != nil {
+				http.Error(w, "Bad value for param \"lines\"", 400)
+				logError.Printf("%s\n", err)
+				return
+			} else if numL < 1 {
+				numL = DEFAULT_LINES
+			}
 		}
 
 		char := r.URL.Query().Get("character")
