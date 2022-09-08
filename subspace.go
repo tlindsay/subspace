@@ -2,16 +2,20 @@ package subspace
 
 import (
 	"embed"
-	"encoding/json"
 	"math/rand"
 	"strings"
 	"time"
+
+	easyjson "github.com/mailru/easyjson"
 )
 
 //go:embed assets/*.json
 var fs embed.FS
 
-var ALL_LINES []Line
+//easyjson:json
+type LineSlice []Line
+
+var ALL_LINES LineSlice
 
 var CHARACTERS = map[string]string{
 	"beverly": "beverly.json",
@@ -33,7 +37,7 @@ type Paragraph struct {
 type Line struct {
 	Text      string `json:"text"`
 	Episode   string `json:"episode"`
-	WordCount int16  `json:"word_count"`
+	WordCount int    `json:"word_count"`
 }
 
 func MakeItSo(numParagraphs int, numLines int, character string) ([]string, error) {
@@ -107,7 +111,7 @@ func loadLines(char string) error {
 		return err
 	}
 
-	if err := json.Unmarshal(f, &ALL_LINES); err != nil {
+	if err := easyjson.Unmarshal(f, &ALL_LINES); err != nil {
 		return err
 	}
 
