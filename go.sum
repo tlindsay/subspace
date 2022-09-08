@@ -1,5 +1,7 @@
 github.com/fastly/compute-sdk-go v0.1.1 h1:Kz4ggWOVMyoTdkTTbTgPgZ3RB2DKANIb+EWXRNs/eh0=
 github.com/fastly/compute-sdk-go v0.1.1/go.mod h1:Nsi7SyXNUrLdN0apygSKiFeUzJSpTrIu9iDemKA0Z3s=
+github.com/joeshaw/fsthttp-adapter v0.0.0-20220901181433-94b895d0c575 h1:wOJu0+k3XupvdeFlJzAwlSBdQgDlx1W5PfRmS2rDeng=
+github.com/joeshaw/fsthttp-adapter v0.0.0-20220901181433-94b895d0c575/go.mod h1:vK0Rd6+65uEs7r/utChRZlL2+iLDTjp110tmsX84iks=
 github.com/josharian/intern v1.0.0 h1:vlS4z54oSdjm0bgjRigI+G1HpF+tI+9rE5LLzOg8HmY=
 github.com/josharian/intern v1.0.0/go.mod h1:5DoeVV0s6jJacbCEi61lwdGj/aVlrQvzHFFd8Hwg//Y=
 github.com/mailru/easyjson v0.7.7 h1:UGYAvKxe3sBsEDzO8ZeWOSlIQfWFlxbzLZe7hwFURr0=
