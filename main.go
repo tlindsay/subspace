@@ -6,13 +6,16 @@ import (
 	"os"
 	"strings"
 
-	"github.com/tlindsay/subspace"
+	"github.com/tlindsay/subspace/subspace"
+	"github.com/tlindsay/subspace/api"
+	"github.com/tlindsay/subspace/tui"
 )
 
 func main() {
 	var numParagraphs int
 	var numLines int
 	var character string
+	var interactive bool
 	var shouldPrintCharacters bool
 	var shouldStartServer bool
 	var port int
@@ -27,8 +30,15 @@ func main() {
 	flag.BoolVar(&shouldPrintCharacters, "list-chars", false, "list the available characters")
 	flag.BoolVar(&shouldStartServer, "s", false, "start JSON server")
 	flag.BoolVar(&shouldStartServer, "serve", false, "start JSON server")
+	flag.BoolVar(&interactive, "i", false, "start interactive TUI")
+	flag.BoolVar(&interactive, "interactive", false, "start interactive TUI")
 	flag.IntVar(&port, "port", 1701, "the port to serve on")
 	flag.Parse()
+
+	if (interactive) {
+		tui.StartTUI()
+		os.Exit(0)
+	}
 
 	if shouldPrintCharacters {
 		chars := subspace.ListAllCharacters()
@@ -37,7 +47,7 @@ func main() {
 	}
 
 	if shouldStartServer {
-		subspace.StartServer(port)
+		api.StartServer(port)
 	}
 
 	text, err := subspace.MakeItSo(numParagraphs, numLines, character)

@@ -1,4 +1,4 @@
-package subspace
+package api
 
 import (
 	"encoding/json"
@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/tlindsay/subspace/response"
+	"github.com/tlindsay/subspace/subspace"
 )
 
 var DEFAULT_PARAGRAPHS = 3
@@ -30,7 +31,7 @@ func Handler() http.HandlerFunc {
 
 		logInfo.Printf("[Info] Received %s", r.URL)
 		if r.URL.Path == "/characters" {
-			j, err := json.Marshal(ListAllCharacters())
+			j, err := json.Marshal(subspace.ListAllCharacters())
 			if err != nil {
 				http.Error(w, "Unknown error", 500)
 				logError.Printf("%s\n", err)
@@ -82,20 +83,20 @@ func Handler() http.HandlerFunc {
 			logInfo.Println("Selecting random character...")
 			rand.Seed(time.Now().Unix())
 			charKeys := []string{}
-			for key, _ := range CHARACTERS {
+			for key, _ := range subspace.CHARACTERS {
 				charKeys = append(charKeys, key)
 			}
 			idx := rand.Intn(len(charKeys))
 			char = charKeys[idx]
 		}
-		if _, exist := CHARACTERS[char]; !exist {
+		if _, exist := subspace.CHARACTERS[char]; !exist {
 			http.Error(w, "Character not supported. See valid characters at /characters", 400)
 			logError.Printf("Character %s not supported\n", char)
 			return
 		}
 
 		logInfo.Printf("Getting lines for character: %s\n", char)
-		output, err := MakeItSo(numP, numL, char)
+		output, err := subspace.MakeItSo(numP, numL, char)
 
 		if err != nil {
 			logError.Printf("Unknown error occurred: %s\n", err)
