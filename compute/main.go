@@ -5,7 +5,7 @@ import (
 
 	"github.com/fastly/compute-sdk-go/fsthttp"
 	adapter "github.com/joeshaw/fsthttp-adapter/handler"
-	"github.com/tlindsay/subspace"
+	subspace "github.com/tlindsay/subspace/api"
 )
 
 // The entry point for your application.
