@@ -6,13 +6,12 @@ import (
 	"strings"
 	"time"
 
-	easyjson "github.com/mailru/easyjson"
+	"encoding/json"
 )
 
 //go:embed assets/*.json
 var fs embed.FS
 
-//easyjson:json
 type LineSlice []Line
 
 var CHARACTERS = map[string]string{
@@ -103,7 +102,7 @@ func loadLines(char string) (LineSlice, error) {
 	}
 
 	var lines LineSlice
-	if err := easyjson.Unmarshal(f, &lines); err != nil {
+	if err := json.Unmarshal(f, &lines); err != nil {
 		return nil, err
 	}
 
