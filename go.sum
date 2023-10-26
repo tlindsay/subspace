@@ -13,8 +13,8 @@ github.com/charmbracelet/lipgloss v0.6.0/go.mod h1:tHh2wr34xcHjC2HCXIlGSG1jaDF0S
 github.com/containerd/console v1.0.3/go.mod h1:7LqA/THxQ86k76b8c/EMSiaJ3h1eZkMkXar0TQ1gf3U=
 github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81 h1:q2hJAaP1k2wIvVRd/hEHD7lacgqrCPS+k8g1MndzfWY=
 github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81/go.mod h1:YynlIjWYF8myEu6sdkwKIvGQq+cOckRm6So2avqoYAk=
-github.com/fastly/compute-sdk-go v0.1.1 h1:Kz4ggWOVMyoTdkTTbTgPgZ3RB2DKANIb+EWXRNs/eh0=
-github.com/fastly/compute-sdk-go v0.1.1/go.mod h1:Nsi7SyXNUrLdN0apygSKiFeUzJSpTrIu9iDemKA0Z3s=
+github.com/fastly/compute-sdk-go v1.0.0 h1:uURhhPXAvX5hbkPIbfJQ/lZTxtHuL/Y0dyN9nMnV9Zk=
+github.com/fastly/compute-sdk-go v1.0.0/go.mod h1:FkuTq3OC+czAQOonII04YhiVjfBtMXOuv3hiHjXjHlE=
 github.com/joeshaw/fsthttp-adapter v0.0.0-20220901181433-94b895d0c575 h1:wOJu0+k3XupvdeFlJzAwlSBdQgDlx1W5PfRmS2rDeng=
 github.com/joeshaw/fsthttp-adapter v0.0.0-20220901181433-94b895d0c575/go.mod h1:vK0Rd6+65uEs7r/utChRZlL2+iLDTjp110tmsX84iks=
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=

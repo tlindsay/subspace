@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/bubbles v0.15.0
 	github.com/charmbracelet/bubbletea v0.24.0
 	github.com/charmbracelet/lipgloss v0.6.0
-	github.com/fastly/compute-sdk-go v0.1.1
+	github.com/fastly/compute-sdk-go v1.0.0
 	github.com/joeshaw/fsthttp-adapter v0.0.0-20220901181433-94b895d0c575
 )
 
